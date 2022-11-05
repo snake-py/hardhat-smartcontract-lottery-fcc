@@ -28,6 +28,13 @@ module.exports = {
             blockConfirmations: 6,
         },
     },
+    gasReporter: {
+        currency: 'USD',
+        enabled: process.env.REPORT_GAS,
+        noColors: true,
+        // coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+        outputFile: 'gas-report.txt',
+    },
     solidity: '0.8.17',
     namedAccounts: {
         deployer: {
@@ -36,5 +43,8 @@ module.exports = {
         player: {
             default: 1, // here this will by default take the second account as player
         },
+    },
+    mocha: {
+        timeout: 200000,
     },
 };

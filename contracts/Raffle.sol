@@ -32,7 +32,6 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     /* Types */
     enum RaffleState {
         OPEN,
-        CLOSED,
         CALCUATING
     }
 
@@ -159,7 +158,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         return s_recentWinner;
     }
 
-    function getEntraceFee() public view returns (uint256) {
+    function getEntranceFee() public view returns (uint256) {
         return i_entranceFee;
     }
 
@@ -189,5 +188,9 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
 
     function getRequestConfirmations() public pure returns (uint16) {
         return REQUEST_CONFIRMATIONS;
+    }
+
+    function getInterval() public view returns (uint256) {
+        return i_interval;
     }
 }

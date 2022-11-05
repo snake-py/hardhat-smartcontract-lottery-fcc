@@ -9,10 +9,11 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
     let vrfCoordinatorV2Address;
     let subscriptionId;
+    let vrfCoordinatorV2Mock;
 
     if (developmentChains.includes(network.name)) {
         log('local network detected');
-        const vrfCoordinatorV2Mock = await ethers.getContract('VRFCoordinatorV2Mock');
+        vrfCoordinatorV2Mock = await ethers.getContract('VRFCoordinatorV2Mock');
         vrfCoordinatorV2Address = vrfCoordinatorV2Mock.address;
         log('address', vrfCoordinatorV2Address);
         const transactionResponse = await vrfCoordinatorV2Mock.createSubscription();
@@ -44,6 +45,8 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     });
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
         await verify('Raffle', raffle.address, args);
+    } else {
+        await vrfCoordinatorV2Mock.addConsumer(subscriptionId, raffle.address);
     }
     log('Raffle deployed');
     log('-------------------');
